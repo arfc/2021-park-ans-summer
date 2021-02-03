@@ -1,9 +1,4 @@
-\section{Background & Methodology}
-
-\subsection{Moltres}
-
-Moltres \cite{lindsay_introduction_2018} is an open-source, \gls{MOOSE}-based
-application designed for multiphysics simulations of \glspl{MSR}.
+\section{Background \& Methodology}
 
 \subsection{CNRS Benchmark}
 
@@ -18,12 +13,12 @@ Lastly, Phase 2 consists of a coupled, transient problem.
 
 The domain geometry is a 2m by 2m square cavity filled with LiF-BeF$_2$-UF$_4$
 molten salt at an initial temperature of 900K \cite{tiberga_results_2020}.
-Standard vacuum boundary conditions apply for neutron flux along the boundaries,
-with homogeneous boundary conditions for delayed neutron precursors. No-slip
-boundary conditions apply for flow in the cavity, except the top boundary when
-the subproblem imposes forced convection via lid-driven cavity flow. For
-temperature, all boundaries are insulated and we simulate salt cooling with the
-following volumetric heat sink equation:
+Standard vacuum boundary conditions apply for neutron flux along the
+boundaries, with homogeneous boundary conditions for delayed neutron
+precursors. No-slip boundary conditions apply for flow in the cavity, except
+the top boundary when the subproblem imposes forced convection via lid-driven
+cavity flow. For temperature, all boundaries are insulated and we simulate salt
+cooling with the following volumetric heat sink equation:
 %
 \begin{align}
     q'''(\vec{r}) &= \gamma \left(900 - T(\vec{r})\right),
@@ -73,11 +68,13 @@ lid-driven cavity flow.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item $U_{lid} = 0.5$m$\cdot$s$^{-1}$
 \end{itemize}
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Velocity components $(u_x, u_y)$ along centerlines AA' and BB'
 \end{itemize}
 
@@ -89,6 +86,7 @@ configuration. The reactor power $P$ is used to normalize the neutron flux.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item Static fuel
     \item $T = 900$ K
     \item $P = 1$ GW
@@ -96,6 +94,7 @@ configuration. The reactor power $P$ is used to normalize the neutron flux.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Fission rate density, $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$, along
     centerline AA'
     \item Reactivity, $\rho$
@@ -110,6 +109,7 @@ field and fission heat generation from the previous two steps.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item Fixed velocity field from Step 0.1
     \item Fixed fission heat source distribution from Step 0.2
     \item Heat transfer coefficient, $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}
@@ -118,6 +118,7 @@ field and fission heat generation from the previous two steps.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Temperature distribution $T$ along centerlines AA' and BB'
 \end{itemize}
 
@@ -130,6 +131,7 @@ provided velocity field.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item Fixed velocity field from Step 0.1
     \item $T = 900$ K
     \item $P = 1$ GW
@@ -137,6 +139,7 @@ provided velocity field.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Delayed neutron source, $\sum_j \lambda_j C_j$, along AA' and BB'
     \item Reactivity change from Step 0.2, $\rho - \rho_{s_{0.2}}$
 \end{itemize}
@@ -153,6 +156,7 @@ temperature distribution.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item Fixed velocity field from Step 0.1
     \item $P = 1$ GW
     \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
@@ -160,6 +164,7 @@ temperature distribution.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Temperature distribution along AA' and BB'
     \item Reactivity change from Step 1.1, $\rho - \rho_{s_{1.1}}$
     \item Change in fission rate density along AA' and BB' with respect to the
@@ -174,6 +179,7 @@ This step assesses the full multiphysics solution with buoyancy-driven flow.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item $P = 1$ GW
     \item $U_{lid} = 0$
     \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
@@ -181,6 +187,7 @@ This step assesses the full multiphysics solution with buoyancy-driven flow.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Velocity components $(u_x, u_y)$ along AA' and BB'
     \item Temperature distribution $T$ along AA' and BB'
     \item Delayed neutron source, $\sum_j \lambda_j C_j$, along AA' and BB'
@@ -195,6 +202,7 @@ and external momentum-driven flow from the nonzero lid velocity.
 \textit{Input parameters}
 %
 \begin{itemize}
+    \itemsep0em
     \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
     \item $P = [0, 1]$ GW at $0.2$ GW intervals
     \item $U_{lid} = [0, 0.5]$ m$\cdot$s$^{-1}$ at 0.1m$\cdot$s$^{-1}$
@@ -203,6 +211,7 @@ and external momentum-driven flow from the nonzero lid velocity.
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Reactivity change from Step 0.2, $\rho - \rho_{s_{0.2}}$ for the
     various permutations of $P$ and $U_{lid}$ values
 \end{itemize}
@@ -218,6 +227,7 @@ amplitude and at the following frequencies: $[0.0125, 0.025, 0.05, 0.1, 0.2,
 \textit{Initial conditions}
 %
 \begin{itemize}
+    \itemsep0em
     \item Steady-state solution from Step 1.4 with
     $U_{lid} = 0.5 $m$\cdot$s$^{-1}$ and $P = 1$ GW
     \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
@@ -225,6 +235,7 @@ amplitude and at the following frequencies: $[0.0125, 0.025, 0.05, 0.1, 0.2,
 
 \textit{Observables}
 \begin{itemize}
+    \itemsep0em
     \item Power gain and phase shift at each perturbation frequency.
 \end{itemize}
 %
@@ -234,3 +245,44 @@ The gain is defined as:
     Gain &= \frac{(P_{max} - P_{avg})/P_{avg}}{(\gamma_{max} - \gamma_{avg})/
     \gamma_{avg}}
 \end{align}
+
+\subsection{Moltres}
+
+Moltres \cite{lindsay_introduction_2018} is an open-source, \gls{MOOSE}-based
+application designed for multiphysics simulations of \glspl{MSR}. The goal of
+making Moltres open-source is to promote quality through transparency and
+ease of peer review. The source code \cite{lindsay_moltres_2017} is available
+on GitHub \cite{github_build_2017}. Moltres leverages on \texttt{git} for
+version control, and integrated testing to protect existing capabilities while
+concurrently supporting continued code development. Moltres depends on the
+\gls{MOOSE} finite element framework for its meshing and parallel, nonlinear
+NEWTON-based solver capabilities; as well as common physics modules such as the
+Navier-Stokes module \cite{peterson_overview_2017} in \gls{MOOSE}. Therefore,
+Moltres by default uses tight coupling methods with implicit time-stepping.
+Users can also opt to decouple problems depending on their specific needs.
+
+Moltres solves the multigroup neutron diffusion equation for an arbitrary
+number of energy and precursor groups. For this study, we coupled Moltres'
+neutronics capabilities with \gls{MOOSE}'s incompressible Navier-Stokes
+capabilities \cite{peterson_overview_2017} to
+model precursor drift and thermal-hydraulics. We performed all simulations
+except Step 1.4 using the Preconditioned \gls{JFNK} method with all physics
+fully coupled. Step 1.4 required a transient solve on the thermal-hydraulics
+portion of the problem to resolve the coupling between lid-driven flow and
+buoyancy effects. We then loosely coupled the thermal-hydraulics transient
+solve to the neutronics steady-state criticality solve. For future work, we
+could explore and determine the appropriate initial conditions or \gls{MOOSE}'s
+nonlinear solver settings to circumvent this issue.
+
+For this study, we discretized the problem domain into a 200 by 200 structured
+mesh, resulting in uniform mesh elements of dimensions 1cm by 1cm. We
+approximated most of the relevant variables, i.e. neutron fluxes, velocity
+components, pressure, and temperature, using first-order Lagrange shape
+functions. The only exception is the precursor concentration variables, which
+we approximated using zeroth-order monomial shape functions and solved using
+the Discontinuous Galerkin finite element method to eliminate spurious
+numerical oscillations due to the high Schmidt number flow. As for the high
+Reynolds number flow, we stabilized the incompressible Navier-Stokes equations
+using the streamline upwind Petrov-Galerkin and pressure-stabilizing
+Petrov-Galerkin stabilization methods \cite{peterson_overview_2017} provided in
+\gls{MOOSE}.
