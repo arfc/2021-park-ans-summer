@@ -9,7 +9,7 @@ systematically assessing the capabilities of \gls{MSR} software and pinpointing
 the source of discrepancies between software. Phase 0 consists
 single-physics problems in fluid dynamics, neutronics, and temperature,
 respectively. Phase 1 consists of coupled, steady-state eigenvalue problems.
-Lastly, Phase 2 consists of a coupled, transient problem.
+Lastly, Phase 2 consists of a coupled, transient scenario.
 
 The domain geometry is a 2m by 2m square cavity filled with LiF-BeF$_2$-UF$_4$
 molten salt at an initial temperature of 900K \cite{tiberga_results_2020}.
@@ -34,10 +34,10 @@ Tiberga et al. \cite{tiberga_results_2020} used Serpent 2
 \cite{leppanen_serpent_2014} with the JEFF-3.1 library
 \cite{koning_jeff-31_2006} to generate multigroup neutronics data for the
 LiF-BeF$_2$-UF$_4$ salt in the domain at 900K. They condensed the neutronics
-data into six energy groups and eight precursor groups, and the data is
-available in their paper \cite{tiberga_results_2020}. The following equations
-govern the temperature dependence in the cross sections and the neutron
-diffusion coefficients:
+data into six energy groups and eight precursor groups. Their paper contains
+all relevant data \cite{tiberga_results_2020}. The benchmark prescribes the
+following equations to govern the temperature dependence in the cross sections
+and the neutron diffusion coefficients:
 %
 \begin{align}
     \Sigma_i (T) &= \Sigma_i(T_{ref})
@@ -54,9 +54,9 @@ diffusion coefficients:
     T_{ref} &= \mbox{reference temperature} = 900\mbox{ K}. \nonumber
 \end{align}
 
-The benchmark prescribes for incompressible Navier-Stokes and the Boussinesq
-approximation for buoyancy when evaluating the salt flow in the domain, but
-places no restrictions on the neutronics model.
+The benchmark also prescribes for incompressible Navier-Stokes and the
+Boussinesq approximation for buoyancy when evaluating the salt flow in the
+domain, but places no restrictions on the type of neutronics model.
 The following subsections briefly detail each benchmark subproblem.
 
 \subsubsection{Step 0.1: Velocity field}
@@ -81,7 +81,7 @@ lid-driven cavity flow.
 \subsubsection{Step 0.2: Neutronics}
 
 This step assesses the neutronics solution in a static, isothermal fuel
-configuration. The reactor power $P$ is used to normalize the neutron flux.
+configuration. We use the reactor power $P$ to normalize the neutron flux.
 
 \textit{Input parameters}
 %
@@ -125,7 +125,7 @@ field and fission heat generation from the previous two steps.
 \subsubsection{Step 1.1: Circulating fuel}
 
 This step assesses the neutronics solution under a fixed velocity field and
-uniform temperature distribution. The precursors are allowed to drift under the
+uniform temperature distribution. We allow the precursors to drift under the
 provided velocity field.
 
 \textit{Input parameters}
@@ -252,7 +252,7 @@ Moltres \cite{lindsay_introduction_2018} is an open-source, \gls{MOOSE}-based
 application designed for multiphysics simulations of \glspl{MSR}. The goal of
 making Moltres open-source is to promote quality through transparency and
 ease of peer review. The source code \cite{lindsay_moltres_2017} is available
-on GitHub \cite{github_build_2017}. Moltres leverages on \texttt{git} for
+on GitHub \cite{lindsay_moltres_2017}. Moltres leverages on \texttt{git} for
 version control, and integrated testing to protect existing capabilities while
 concurrently supporting continued code development. Moltres depends on the
 \gls{MOOSE} finite element framework for its meshing and parallel, nonlinear
@@ -281,8 +281,8 @@ components, pressure, and temperature, using first-order Lagrange shape
 functions. The only exception is the precursor concentration variables, which
 we approximated using zeroth-order monomial shape functions and solved using
 the Discontinuous Galerkin finite element method to eliminate spurious
-numerical oscillations due to the high Schmidt number flow. As for the high
-Reynolds number flow, we stabilized the incompressible Navier-Stokes equations
-using the streamline upwind Petrov-Galerkin and pressure-stabilizing
+numerical oscillations arising from the high Schmidt number flow. As for the
+high Reynolds number flow, we stabilized the incompressible Navier-Stokes
+equations using the streamline upwind Petrov-Galerkin and pressure-stabilizing
 Petrov-Galerkin stabilization methods \cite{peterson_overview_2017} provided in
 \gls{MOOSE}.
