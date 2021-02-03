@@ -1,5 +1,47 @@
 \section{Introduction}
 
-This topic is of extreme importance to a significant division in
-a subset of professional societies. Here I will introduce a novel approach
-to an old problem that yields surprising results that are very interesting.
+The past decade has seen growing research interest in \glspl{MSR}. Some of the
+biggest research programs funding \gls{MSR} development include the
+\gls{SAMOSAFER} project in the EU \cite{cordis_severe_nodate}, the TMSR
+program in China \cite{dai_17_2017}, and the \gls{ARDP} in the US
+\cite{office_of_nuclear_energy_advanced_nodate}. These programs include
+efforts towards developing
+reactor analysis software specifically tuned for \glspl{MSR}. Reactor
+analysis software are important tools in reactor development because
+they help inform design choices in line with overarching goals such as
+maximizing safety, reducing proliferation risks, and improving fuel
+efficiency.
+
+Circulating fuel \glspl{MSR} present new challenges in computational reactor
+safety analysis arising from the liquid fuel form. \glspl{MSR} feature high
+passive safety due to strong negative reactivity feedback in the primary
+coolant which holds the dissolved fissile material (henceforth referred to as
+fuel salt). However, strong feedback causes strong and nearly instantaneous
+interactions between reactor power and thermal-hydraulics. Thus, unexpected
+changes in coolant flow and temperature greatly affect reactor power.
+
+Numerical methods for solving coupled multiphysics problems fall under two
+general categories: loose coupling and tight coupling methods. Loose coupling
+methods involve decoupling multiphysics problems through assumptions and/or
+solving each individual set of physics separately and serially, while tight
+coupling methods involve solving the coupled sets of physics simultaneously.
+Common examples for loose coupling and tight coupling methods are the
+Picard iteration method and \gls{JFNK} method, respectively
+\cite{wang_review_2020}. Tight coupling methods may seem more computationally
+intensive but with appropriate preconditioning methods, they can be just as
+competitive as or even faster than loose coupling \cite{wang_review_2020}.
+Tight coupling methods also boast higher accuracy and better convergence rates
+for strongly coupled problems such as the coupled neutronics and
+thermal-hydraulics in \glspl{MSR} \cite{lindsay_introduction_2018}.
+
+This paper presents benchmarking results from Moltres, a coupled
+neutronics/thermal-hydraulics simulation software for \glspl{MSR}. Moltres is
+built on the \gls{MOOSE} \cite{gaston_physics-based_2015} finite element
+framework which provides various tools for performing fully-coupled,
+NEWTON-based solves. Software benchmarking exercises are important as they
+fundamentally provide a common basis of comparison between software developed
+by different groups of people for solving the same or similar mathematical
+problems. Code-to-code verification of new software builds confidence in the
+software among researchers and other stakeholders. This trust promotes
+research collaboration and advances the study of more complicated problems that
+feature the same underlying physics/mechanisms.
