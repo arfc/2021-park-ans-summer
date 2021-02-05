@@ -21,13 +21,15 @@ each measured quantity $Q_c$ calculated using the following equation:
     &= \mbox{average value of $Q$ at $\vec{r_i}$ from all packages.} \nonumber
 \end{align}
 
-\subsection{Phase 0 results}
+\subsection{Phase 0 results \& discussion}
 
-Table \ref{table:disc0} shows the discrepancy values from Moltres and the
-corresponding average discrepancy values from the benchmark
+Table \ref{table:disc0} shows the discrepancy values from Moltres for Phase 0
+and the corresponding average discrepancy values from the benchmark
 \cite{tiberga_results_2020}. Moltres performs excellently as all discrepancy
 values are within the same order of magnitude as those from the benchmark,
-except the discrepancy value for $T$ along centerline BB'.
+except the discrepancy value for $T$ along centerline BB'. We also observe in
+table \ref{table:rho} that the $\rho$ value from Moltres falls within the
+range of $\rho$ values from the benchmark.
 
 Moltres reports a slightly larger discrepancy in the fission rate density as
 we used zeroth-order shape functions to approximate the precursor
@@ -37,19 +39,12 @@ domain with no reflectors.
 
 The temperature values at the end of centerline BB', near the top boundary,
 deviated significantly (912 K from Moltres
-vs ~935 K from the benchmark) because the finite element method struggles with
+vs. ~935 K from the benchmark). The finite element method struggles with
 the velocity boundary condition discontinuity on the top left corner of the
-domain. As such, we observe the aforementioned temperature deviation
+domain. As such, we observe the temperature deviation
 directly downstream of the discontinuity.
-
-\subsubsection{Step 0.1: Velocity field}
-
-Table \ref{table:vel} shows the discrepancies in the velocity components
-$(u_x, u_y)$ from Moltres and the corresponding average discrepancies from the
-benchmark. Moltres performed excellently as all four discrepancy values from
-Moltres fall below the average discrepancy from the benchmark.
-
-\begin{table}[htb!]
+%
+\begin{table}[t!]
 	\caption{Discrepancy values for the results from Phase 0.}
 	\centering
 	\small
@@ -78,8 +73,8 @@ Moltres fall below the average discrepancy from the benchmark.
 	\end{tabular}
 	\label{table:disc0}
 \end{table}
-
-\begin{table}[htbp!]
+%
+\begin{table}[t!]
     \caption{Reactivity $\rho$ and change in reactivity
     $\left(\rho_a - \rho_b\right)$ values from Steps 0.2, 1.1,
     1.2, and 1.3. All units are in pcm.}
@@ -104,46 +99,37 @@ Moltres fall below the average discrepancy from the benchmark.
         TUD-$S_6$   & 578.1 & -60.7 & -1122.0 & -1184.4 \\
         \bottomrule
     \end{tabular}
-    \label{table:rho02}
+    \label{table:rho}
 \end{table}
 
-\subsubsection{Step 0.2: Neutronics}
+\subsection{Phase 1 results \& discussion}
 
-Table \ref{table:nts} shows the discrepancies in the fission rate density
-$\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$ from Moltres and the corresponding
-average discrepancies from the benchmark.
-Moltres reports a negligibly worse discrepancy in the fission rate density.
-We also observe in table \ref{table:rho02} that the $\rho$ value from Moltres
-falls within the range of $\rho$ values from the benchmark. We attribute some
-of the overall discrepancy to the zeroth-order shape functions used to
-approximate the precursor concentrations. Zeroth-order shape functions
-perform worse in regions with large gradients observed near the
-boundaries of the homogeneous domain with no reflectors.
-
-\subsubsection{Step 0.3: Temperature}
-
-Table \ref{table:temp} shows the discrepancies in the temperature distribution
-from Moltres and the corresponding average discrepancies from the benchmark.
-Moltres reported discrepancy values that closely follow the benchmark average
-discrepancies. The temperature values at the end of BB', near the top boundary,
-deviated significantly (912 K from Moltres
-vs ~935 K from the benchmark) because the finite element method struggles with
-the velocity boundary condition discontinuity on the top left corner of the
-domain. As such, we observe the aforementioned deviation which is located
-directly downstream of the discontinuity.
-
-\subsection{Phase 1 results}
+Figure \ref{fig:color} shows the typical temperature distribution and velocity
+streamlines from running a fully coupled problem in Step 1.4. 
+Table \ref{table:disc1} shows the discrepancy values from Moltres for Steps
+1.1, 1.2, and 1.3,
+and the corresponding average discrepancy values from the benchmark
+\cite{tiberga_results_2020}. The subsequent subsections discuss the results
+for each benchmark step.
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{full-coupled}
+  \caption{The temperature distribution in the domain for the fully coupled
+  system (Step 1.4) with buoyancy effects, $P = 1$ GW, and $U_{lid} = 0.5$
+  m$\cdot$s$^{-1}$. The lines correspond to the streamlines of the velocity
+  field.}
+  \label{fig:color}
+\end{figure}
 
 \subsubsection{Step 1.1: Circulating fuel}
 
-Table \ref{table:circ} shows the discrepancies in the delayed neutron source
-from Moltres and the corresponding average discrepancies from the benchmark.
-Moltres performs relatively worse than the benchmark average but the
+Moltres performs relatively worse than the benchmark average, but the
 discrepancies are still on the same order of magnitude. We attribute this to
 the same zeroth-order shape function approximation for the precursor
-concentration that we mentioned in Step 0.2.
+concentration mentioned in Step 0.2.
 
-On the other hand, we observe in Table \ref{table:rho11} that the change in
+On the other hand, we observe in Table \ref{table:rho} that the change in
 $\rho$ relative to Step 0.2 falls within the reported range of $\rho$ values
 from the benchmark.
 
@@ -184,40 +170,34 @@ from the benchmark.
 
 \subsubsection{Step 1.2: Power coupling}
 
-Table \ref{table:power} shows the discrepancies in the temperature distribution
-and change in fission rate density relative to Step 0.2
-from Moltres and the corresponding average discrepancies from the benchmark.
-For this step, Moltres performed better than the benchmark average with the
-exception of the temperature distribution along BB', the cause of which we
+For this step, Moltres performed better than the benchmark average except
+the temperature distribution along BB', the cause of which we
 addressed in Step 0.3. The smaller discrepancy in the change in fission rate
 density indicates that Moltres is on average more self-consistent since this
 quantity measures the difference between two sets of data from the same
-software. Moltres also reports a change in $\rho$, relative to Step
-1.1, that falls within the range of benchmark values.
+software. From Table \ref{table:rho}, Moltres also reports a change in $\rho$,
+relative to Step 1.1, that falls within the range of benchmark values.
 
 \subsubsection{Step 1.3: Buoyancy}
 
-Table \ref{table:buoy} shows the discrepancies in the velocity components,
-temperature distribution, and delayed neutron source from Moltres and the
-corresponding average discrepancies from the
-benchmark. Moltres performs reasonably well in Step 1.3, with smaller
+Moltres performs reasonably well in Step 1.3, with smaller
 discrepancies in most of the velocity components and temperature distribution
 than the benchmark average. Moltres bucks the trend for discrepancies
 in the delayed neutron source as the discrepancy along AA' is
-noticeably worse than the benchmark average but Moltres performs relatively
-better along BB'. In Table \ref{table:rho13}, we observe once again that the
+noticeably worse than the benchmark average, but Moltres performs relatively
+better along BB'. In Table \ref{table:rho}, we observe once again that the
 change in $\rho$ in Moltres falls within the range of benchmark values.
 
 \subsubsection{Step 1.4: Full coupling}
 
 Table \ref{table:full} shows the change in $\rho$ under the various $U_{lid}$
 and $P$ values. We refer readers to Tiberga et al.'s paper
-\cite{tiberga_results_2020} for the corresponding values from the benchmark.
+\cite{tiberga_results_2020} for the benchmark's corresponding values.
 The results from Moltres all fall within the range of benchmark values for all
 cases. Furthermore, the $\Delta\rho$ values are all within 1.1 pcm of the
 corresponding values from the TUD-S$_2$ model in the benchmark paper. Given
 that the $S_2$ discrete ordinates method is qualitatively similar to the
-multigroup neutron diffusion method, this observation shows that Moltres is
+multigroup neutron diffusion method, this shows that Moltres is
 consistent to the benchmark within the limitations brought about by the neutron
 diffusion method.
 

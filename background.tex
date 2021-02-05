@@ -3,15 +3,14 @@
 \subsection{CNRS Benchmark}
 
 The CNRS benchmark \cite{tiberga_results_2020} consists of three ``Phases'' and
-eight ``Steps'' in total. Each Step is a well-defined subproblem for
-systematically assessing the capabilities of \gls{MSR} software and pinpointing
-the source of discrepancies between software. Phase 0 consists
+eight ``Steps'' in total. Each step is a well-defined subproblem for
+systematically assessing \gls{MSR} software capabilities and pinpointing
+the source of discrepancies between software. Phase 0 consists of
 single-physics problems in fluid dynamics, neutronics, and temperature,
 respectively. Phase 1 consists of coupled, steady-state eigenvalue problems.
 Lastly, Phase 2 consists of a coupled, transient scenario. Table
-\ref{table:benchmark} provides brief descriptions of each Step, except for the
-last transient case as it is still work in progress at the time of writing and
-submission.
+\ref{table:benchmark} provides brief descriptions of each step, except for the
+last transient case as it is still a work in progress at the time of writing.
 
 The domain geometry is a 2m by 2m square cavity filled with LiF-BeF$_2$-UF$_4$
 molten salt at an initial temperature of 900K \cite{tiberga_results_2020}.
@@ -58,7 +57,7 @@ and the neutron diffusion coefficients:
 
 The benchmark also prescribes for incompressible Navier-Stokes and the
 Boussinesq approximation for buoyancy when evaluating the salt flow in the
-domain, but places no restrictions on the type of neutronics model.
+domain but places no restrictions on the type of neutronics model.
 
 \begin{table*}[t!]
 	\caption{Description of each benchmark subproblem.}
@@ -137,8 +136,8 @@ domain, but places no restrictions on the type of neutronics model.
         $\rho - \rho_{s_{0.2}}$; \\
         \midrule
         Step 1.4: Full coupling & Solve for the
-        reactivity $\rho$ in a fully coupled system with both external
-        momemtum-driven flow and buoyancy effects and various permutations of
+        reactivity $\rho$ in a fully coupled system with external
+        momentum-driven flow and buoyancy effects and various permutations of
         $P$ and $U_{lid}$ values.  &
 		$\begin{aligned}[t]
 		    \gamma &= 10^6 \mbox{ W$\cdot$m$^{-3}\cdot$K$^{-1}$} \\
@@ -150,14 +149,23 @@ domain, but places no restrictions on the type of neutronics model.
 	\end{tabular}
 	\label{table:benchmark}
 \end{table*}
+%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\columnwidth]{domain}
+  \caption{The CNRS benchmark problem domain. The benchmark compares pointwise
+  observable data along the centerlines AA' and BB'. Retrieved from
+  \cite{tiberga_results_2020}.}
+  \label{fig:domain}
+\end{figure}
 
 \subsection{Moltres}
 
 Moltres \cite{lindsay_introduction_2018} is an open-source, \gls{MOOSE}-based
-application designed for multiphysics simulations of \glspl{MSR}. Moltres
+application designed for multi-physics simulations of \glspl{MSR}. Moltres
 depends on the
 \gls{MOOSE} finite element framework for its meshing and parallel, nonlinear
-NEWTON-based solver capabilities; as well as common physics modules such as the
+NEWTON-based solver capabilities, and standard physics modules such as the
 Navier-Stokes module \cite{peterson_overview_2017} in \gls{MOOSE}.
 
 Moltres solves the multigroup neutron diffusion equation for an arbitrary
@@ -168,12 +176,12 @@ model precursor drift and thermal-hydraulics.
 
 For this study, we discretized the problem domain into a 200 by 200 structured
 mesh, resulting in uniform mesh elements of dimensions 1cm by 1cm. We
-approximated most of the relevant variables, i.e. neutron fluxes, velocity
+approximated most of the relevant variables, i.e., neutron fluxes, velocity
 components, pressure, and temperature, using first-order Lagrange shape
 functions. The only exception is the precursor concentration variables, which
 we approximated using zeroth-order monomial shape functions and solved using
 the Discontinuous Galerkin finite element method to eliminate spurious
-numerical oscillations arising from the high Schmidt number flow. As for the
+numerical oscillations from the high Schmidt number flow. As for the
 high Reynolds number flow, we stabilized the incompressible Navier-Stokes
 equations using the streamline upwind Petrov-Galerkin and pressure-stabilizing
 Petrov-Galerkin stabilization methods \cite{peterson_overview_2017} provided in
