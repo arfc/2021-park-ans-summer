@@ -1,5 +1,22 @@
 \section{Introduction}
 
-This topic is of extreme importance to a significant division in
-a subset of professional societies. Here I will introduce a novel approach
-to an old problem that yields surprising results that are very interesting.
+\glspl{MSR} have attracted increasing research interest over the past two
+decades. Reactor analysis software are essential tools in reactor development
+because they help inform design choices in line with overarching goals such as
+maximizing safety, reducing proliferation risks, and improving fuel
+efficiency.
+
+Circulating fuel \glspl{MSR} present new challenges in computational reactor
+safety analysis arising from the liquid fuel form. In the primary coolant
+holding the dissolved fissile material, the strong negative reactivity feedback
+causes strong and near-instantaneous interactions between reactor power and
+thermal-hydraulics. Thus, unexpected changes in coolant flow and temperature
+have a strong impact on reactor power and vice versa.
+
+This paper presents benchmarking results from Moltres, a coupled
+neutronics/thermal-hydraulics simulation software for \glspl{MSR}. Moltres is
+built on the \gls{MOOSE} \cite{gaston_physics-based_2015} finite element
+framework, which provides various tools for performing fully-coupled,
+NEWTON-based solves. The benchmark, referred to as the \textit{CNRS benchmark}
+\cite{tiberga_results_2020}, is a numerical benchmark for software dedicated to
+modeling \glspl{MSR}.

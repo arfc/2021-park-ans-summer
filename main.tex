@@ -1,11 +1,10 @@
 \documentclass{anstrans}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{FIXME: Abstract Title}
-\author{FIXME: Authors}
-
-\institute{
-Dept. of Nuclear, Plasma and Radiological Engineering, University of Illinois at Urbana-Champaign \\
-FIXME: Your email
+\title{Multiphysics Benchmark Results from Moltres}
+\author{Sun Myung Park$^*$ and Kathryn D. Huff$^*$}
+\institute{$^*$Dept. of Nuclear, Plasma and Radiological Engineering,
+University of Illinois at Urbana-Champaign \\
+smpark3@illinois.edu
 }
 
 %%%% packages and definitions (optional)
@@ -21,9 +20,14 @@ FIXME: Your email
 \usepackage{enumitem}
 \usepackage{placeins}
 \usepackage{tikz}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usetikzlibrary{shapes.geometric, arrows}
 \usepackage[acronym,toc]{glossaries}
+
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{diagbox}
+
 \include{acros}
 \makeglossaries
 
@@ -34,13 +38,7 @@ FIXME: Your email
 \input{introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{motivation}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{background}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\input{methodology}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{results}
