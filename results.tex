@@ -1,12 +1,12 @@
 \section{Results}
 
 In this section, we compare the results from Moltres for each benchmark step to
-the results reported in the the benchmark paper \cite{tiberga_results_2020}. The
-benchmark paper contains results from four different \gls{MSR} simulation
-software packages. The authors performed code-to-code verification by reporting
-the average discrepancy $\epsilon$ from all software packages for each benchmark
-step. The discrepancy $\epsilon_c$ from each software package for each measured
-quantity $Q_c$ calculated using the following equation:
+the results reported in the the benchmark paper \cite{tiberga_results_2020}.
+The benchmark paper contains results from four different \gls{MSR} simulation
+software packages. They performed code-to-code verification by reporting
+the average discrepancy $\epsilon$ from all software packages for each
+benchmark step. The discrepancy $\epsilon_c$ from each software package for
+each measured quantity $Q_c$ calculated using the following equation:
 %
 \begin{align}
     \epsilon_c &= \sqrt{\frac{\sum^{N_p}_{i=1}\left(Q_c(\vec{r_i}) - Q_{avg}
@@ -20,41 +20,94 @@ quantity $Q_c$ calculated using the following equation:
     \nonumber \\
     &= \mbox{average value of $Q$ at $\vec{r_i}$ from all packages.} \nonumber
 \end{align}
-%
-The average discrepancy $\epsilon$ from all software packages is then:
-%
-\begin{align}
-    epsilon = \frac{1}{N_c} \sum^{N_c}_{c=1} \epsilon_c.
-\end{align}
 
-\subsection{Step 0.1: Velocity field}
+\subsection{Phase 0 results}
+
+Table \ref{table:disc0} shows the discrepancy values from Moltres and the
+corresponding average discrepancy values from the benchmark
+\cite{tiberga_results_2020}. Moltres performs excellently as all discrepancy
+values are within the same order of magnitude as those from the benchmark,
+except the discrepancy value for $T$ along centerline BB'.
+
+Moltres reports a slightly larger discrepancy in the fission rate density as
+we used zeroth-order shape functions to approximate the precursor
+concentrations $C_i$. These shape functions perform worse in approximating
+$C_i$ near the boundaries where the gradient is steeper in the homogeneous
+domain with no reflectors.
+
+The temperature values at the end of centerline BB', near the top boundary,
+deviated significantly (912 K from Moltres
+vs ~935 K from the benchmark) because the finite element method struggles with
+the velocity boundary condition discontinuity on the top left corner of the
+domain. As such, we observe the aforementioned temperature deviation
+directly downstream of the discontinuity.
+
+\subsubsection{Step 0.1: Velocity field}
 
 Table \ref{table:vel} shows the discrepancies in the velocity components
 $(u_x, u_y)$ from Moltres and the corresponding average discrepancies from the
 benchmark. Moltres performed excellently as all four discrepancy values from
 Moltres fall below the average discrepancy from the benchmark.
 
-\begin{table}[htbp!]
-	\caption{Discrepancies in $(u_x, u_y)$ from Step 0.1.}
+\begin{table}[htb!]
+	\caption{Discrepancy values for the results from Phase 0.}
 	\centering
 	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S S}
+	\setlength\tabcolsep{2.5pt}
+	\begin{tabular}{l l l S S}
 		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} & {Along BB'} \\
+		\multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
+		& & & {Along AA'} & {Along BB'} \\
 		\midrule
+		\multirow{4}{*}{0.1} &
 		\multirow{2}{*}{$u_x$ [m$\cdot$s$^{-1}$]} & Moltres & 0.247 & 0.266 \\
-		& Benchmark & 0.253 & 0.318 \\
-        \midrule
-		\multirow{2}{*}{$u_y$ [m$\cdot$s$^{-1}$]} & Moltres & 0.540 & 0.467 \\
-		& Benchmark & 0.598 & 0.795 \\
+		& & Benchmark & 0.253 & 0.318 \\
+		& \multirow{2}{*}{$u_y$ [m$\cdot$s$^{-1}$]} & Moltres & 0.540 & 0.467
+		\\
+		& & Benchmark & 0.598 & 0.795 \\
+		\midrule
+		\multirow{2}{*}{0.2} &
+		\multirow{2}{*}{$\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$
+		[m$^{-3}\cdot$s$^{-1}$]} & Moltres & 0.313 & {N.A.} \\
+		& & Benchmark & 0.285 & {N.A.} \\
+		\midrule
+		\multirow{2}{*}{0.3} &
+		\multirow{2}{*}{$T$ [K]} & Moltres & 0.090 & 0.164 \\
+		& & Benchmark & 0.085 & 0.083 \\
 		\bottomrule
 	\end{tabular}
-	\label{table:vel}
+	\label{table:disc0}
 \end{table}
 
-\subsection{Step 0.2: Neutronics}
+\begin{table}[htbp!]
+    \caption{Reactivity $\rho$ and change in reactivity
+    $\left(\rho_a - \rho_b\right)$ values from Steps 0.2, 1.1,
+    1.2, and 1.3. All units are in pcm.}
+    \centering
+    \small
+    \setlength\tabcolsep{3.3pt}
+    \begin{tabular}{l S S S S}
+        \toprule
+        \multirow{2}{*}{\textbf{Source}} & {\textbf{Step 0.2}} &
+        {\textbf{Step 1.1}} & {\textbf{Step 1.2}} & {\textbf{Step 1.3}} \\
+        & {$\rho_{s_{0.2}}$}
+        & {$\rho_{s_{1.1}} - \rho_{s_{0.2}}$}
+        & {$\rho_{s_{1.2}} - \rho_{s_{1.1}}$}
+        & {$\rho_{s_{1.2}} - \rho_{s_{0.2}}$} \\
+        \midrule
+        Moltres     & 465.6 & -62.9 & -1142.2 & -1207.7 \\
+        CNRS-$SP_1$ & 411.3 & -62.5 & -1152.0 & -1220.5 \\
+        CNRS-$SP_3$ & 353.7 & -62.6 & -1152.7 & -1220.7 \\
+        Polimi      & 421.2 & -62.0 & -1161.0 & -1227.0 \\
+        PSI         & 411.7 & -63.0 & -1154.8 & -1219.6 \\
+        TUD-$S_2$   & 482.6 & -62.0 & -1145.2 & -1208.5 \\
+        TUD-$S_6$   & 578.1 & -60.7 & -1122.0 & -1184.4 \\
+        \bottomrule
+    \end{tabular}
+    \label{table:rho02}
+\end{table}
+
+\subsubsection{Step 0.2: Neutronics}
 
 Table \ref{table:nts} shows the discrepancies in the fission rate density
 $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$ from Moltres and the corresponding
@@ -67,46 +120,7 @@ approximate the precursor concentrations. Zeroth-order shape functions
 perform worse in regions with large gradients observed near the
 boundaries of the homogeneous domain with no reflectors.
 
-\begin{table}[htbp!]
-	\caption{Discrepancies in the fission rate density from Step 0.2.}
-	\centering
-	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S}
-		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{1}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} \\
-		\midrule
-		\multirow{2}{*}{$\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$
-		[m$^{-3}\cdot$s$^{-1}$]} & Moltres & 0.313 \\
-		& Benchmark & 0.285\\
-		\bottomrule
-	\end{tabular}
-	\label{table:nts}
-\end{table}
-
-\begin{table}[htbp!]
-    \caption{Reactivity values from Step 0.2.}
-    \centering
-    \footnotesize
-    \setlength\tabcolsep{1.5pt}
-    \begin{tabular}{l S}
-        \toprule
-        \textbf{Source} & {$\rho$ [pcm]} \\
-        \midrule
-        Moltres \hspace{3cm} & 465.6 \\
-        CNRS-$SP_1$ & 411.3 \\
-        CNRS-$SP_3$ & 353.7 \\
-        Polimi & 421.2 \\
-        PSI & 411.7 \\
-        TUD-$S_2$ & 482.6 \\
-        TUD-$S_6$ & 578.1 \\
-        \bottomrule
-    \end{tabular}
-    \label{table:rho02}
-\end{table}
-
-\subsection{Step 0.3: Temperature}
+\subsubsection{Step 0.3: Temperature}
 
 Table \ref{table:temp} shows the discrepancies in the temperature distribution
 from Moltres and the corresponding average discrepancies from the benchmark.
@@ -118,26 +132,11 @@ the velocity boundary condition discontinuity on the top left corner of the
 domain. As such, we observe the aforementioned deviation which is located
 directly downstream of the discontinuity.
 
-\begin{table}[h!]
-	\caption{Discrepancies in the temperature distribution from Step 0.3.}
-	\centering
-	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S S}
-		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} & {Along BB'} \\
-		\midrule
-		\multirow{2}{*}{$T$ [K]} & Moltres & 0.090 & 0.164 \\
-		& Benchmark & 0.085 & 0.083 \\
-		\bottomrule
-	\end{tabular}
-	\label{table:temp}
-\end{table}
+\subsection{Phase 1 results}
 
-\subsection{Step 1.1: Circulating fuel}
+\subsubsection{Step 1.1: Circulating fuel}
 
-Table \ref{table:temp} shows the discrepancies in the delayed neutron source
+Table \ref{table:circ} shows the discrepancies in the delayed neutron source
 from Moltres and the corresponding average discrepancies from the benchmark.
 Moltres performs relatively worse than the benchmark average but the
 discrepancies are still on the same order of magnitude. We attribute this to
@@ -148,45 +147,42 @@ On the other hand, we observe in Table \ref{table:rho11} that the change in
 $\rho$ relative to Step 0.2 falls within the reported range of $\rho$ values
 from the benchmark.
 
-\begin{table}[htbp!]
-	\caption{Discrepancies in the delayed neutron source from Step 1.1.}
+\begin{table}[htb!]
+	\caption{Discrepancy values for the results from Phase 1.}
 	\centering
 	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S S}
+	\setlength\tabcolsep{2.5pt}
+	\begin{tabular}{l p{27mm} l S S}
 		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} & {Along BB'} \\
+		\multirow{2}{*}{\textbf{Step}} & \multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
+		& & & {Along AA'} & {Along BB'} \\
 		\midrule
+		\multirow{2}{*}{1.1} &
 		\multirow{2}{*}{$\sum_j \lambda_j C_j$ [m$^{-3}\cdot$s$^{-1}$]} & Moltres & 0.606 & 0.378 \\
-		& Benchmark & 0.346 & 0.294 \\
+		& & Benchmark & 0.346 & 0.294 \\
+		\midrule
+		\multirow{4}{*}{1.2} &
+		\multirow{2}{*}{$T$ [K]} & Moltres & 0.076 & 0.179 \\
+		& & Benchmark & 0.095 & 0.089 \\
+		& {\footnotesize $\Delta\left[\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})
+		\right]_{s_{1.2}-s_{0.2}}$} & Moltres & 1.110 & 1.082 \\
+		& {\footnotesize [m$^{-3}\cdot$s$^{-1}$]} & Benchmark & 1.576 & 1.133 \\
+		\midrule
+		\multirow{8}{*}{1.3} &
+		\multirow{2}{*}{$u_x$ [m$\cdot$s$^{-1}$]} & Moltres & 0.123 & {N.A.} \\
+		& & Benchmark & 0.691 & {N.A.} \\
+		& \multirow{2}{*}{$u_y$ [m$\cdot$s$^{-1}$]} & Moltres & 0.236 & 0.238 \\
+		& & Benchmark & 0.329 & 0.356 \\
+		& \multirow{2}{*}{$T$ [K]} & Moltres & 0.064 & 0.070 \\
+		& & Benchmark & 0.057 & 0.080 \\
+		& \multirow{2}{*}{$\sum_j \lambda_j C_j$ [m$^{-3}\cdot$s$^{-1}$]} & Moltres & 1.079 & 0.5780 \\
+		& & Benchmark & 0.460 & 1.194 \\
 		\bottomrule
 	\end{tabular}
-	\label{table:circ}
+	\label{table:disc1}
 \end{table}
 
-\begin{table}[htbp!]
-    \caption{Reactivity change in Step 1.1, relative to Step 0.2.}
-    \centering
-    \footnotesize
-    \setlength\tabcolsep{1.5pt}
-    \begin{tabular}{l S}
-        \toprule
-        \textbf{Source} & {$\rho - \rho_{s0.2}$ [pcm]} \\
-        \midrule
-        Moltres \hspace{3cm} & -62.9 \\
-        CNRS-$SP_1$ & -62.5 \\
-        CNRS-$SP_3$ & -62.6 \\
-        Polimi & -62.0 \\
-        PSI & -63.0 \\
-        TUD-$S_2$ & -62.0 \\
-        TUD-$S_6$ & -60.7 \\
-        \bottomrule
-    \end{tabular}
-    \label{table:rho11}
-\end{table}
-
-\subsection{Step 1.2: Power coupling}
+\subsubsection{Step 1.2: Power coupling}
 
 Table \ref{table:power} shows the discrepancies in the temperature distribution
 and change in fission rate density relative to Step 0.2
@@ -199,51 +195,7 @@ quantity measures the difference between two sets of data from the same
 software. Moltres also reports a change in $\rho$, relative to Step
 1.1, that falls within the range of benchmark values.
 
-\begin{table}[htbp!]
-	\caption{Discrepancies in the temperature
-	distribution and change in fission rate density relative to Step 0.2, from
-	Step 1.2.}
-	\centering
-	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S S}
-		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} & {Along BB'} \\
-		\midrule
-		\multirow{2}{*}{$T$ [K]} & Moltres & 0.076 & 0.179 \\
-		& Benchmark & 0.095 & 0.089 \\
-        \midrule
-		\multirow{2}{*}{$\Delta\left[\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})
-		\right]_{s_{1.2}-s_{0.2}}$ [m$^{-3}\cdot$s$^{-1}$]} & Moltres & 1.110 & 1.082 \\
-		& Benchmark & 1.576 & 1.133 \\
-		\bottomrule
-	\end{tabular}
-	\label{table:power}
-\end{table}
-
-\begin{table}[htbp!]
-    \caption{Reactivity change in Step 1.2, relative to Step 1.1.}
-    \centering
-    \footnotesize
-    \setlength\tabcolsep{1.5pt}
-    \begin{tabular}{l S}
-        \toprule
-        \textbf{Source} & {$\rho - \rho_{s1.1}$ [pcm]} \\
-        \midrule
-        Moltres \hspace{3cm} & -1142.2 \\
-        CNRS-$SP_1$ & -1152.0 \\
-        CNRS-$SP_3$ & -1152.7 \\
-        Polimi & -1161.0 \\
-        PSI & -1154.8 \\
-        TUD-$S_2$ & -1145.2 \\
-        TUD-$S_6$ & -1122.0 \\
-        \bottomrule
-    \end{tabular}
-    \label{table:rho12}
-\end{table}
-
-\subsection{Step 1.3: Buoyancy}
+\subsubsection{Step 1.3: Buoyancy}
 
 Table \ref{table:buoy} shows the discrepancies in the velocity components,
 temperature distribution, and delayed neutron source from Moltres and the
@@ -256,55 +208,7 @@ noticeably worse than the benchmark average but Moltres performs relatively
 better along BB'. In Table \ref{table:rho13}, we observe once again that the
 change in $\rho$ in Moltres falls within the range of benchmark values.
 
-\begin{table}[htbp!]
-	\caption{Discrepancies in the velocity components, temperature
-	distribution, and delayed neutron source from Step 1.3.}
-	\centering
-	\small
-	\setlength\tabcolsep{1.5pt}
-	\begin{tabular}{c c S S}
-		\toprule
-		\multirow{2}{*}{\textbf{Observable}} & \multirow{2}{*}{\textbf{Source}} & \multicolumn{2}{c}{\textbf{Discrepancies [\%]}} \\
-		& & {Along AA'} & {Along BB'} \\
-		\midrule
-		\multirow{2}{*}{$u_x$ [m$\cdot$s$^{-1}$]} & Moltres & 0.123 & {N.A.} \\
-		& Benchmark & 0.691 & {N.A.} \\
-		\midrule
-		\multirow{2}{*}{$u_y$ [m$\cdot$s$^{-1}$]} & Moltres & 0.236 & 0.238 \\
-		& Benchmark & 0.329 & 0.356 \\
-		\midrule
-		\multirow{2}{*}{$T$ [K]} & Moltres & 0.064 & 0.070 \\
-		& Benchmark & 0.057 & 0.080 \\
-        \midrule
-		\multirow{2}{*}{$\sum_j \lambda_j C_j$ [m$^{-3}\cdot$s$^{-1}$]} & Moltres & 1.079 & 0.5780 \\
-		& Benchmark & 0.460 & 1.194 \\
-		\bottomrule
-	\end{tabular}
-	\label{table:buoy}
-\end{table}
-
-\begin{table}[htbp!]
-    \caption{Reactivity change in Step 1.3, relative to Step 0.2.}
-    \centering
-    \footnotesize
-    \setlength\tabcolsep{1.5pt}
-    \begin{tabular}{l S}
-        \toprule
-        \textbf{Source} & {$\rho - \rho_{s0.2}$ [pcm]} \\
-        \midrule
-        Moltres \hspace{3cm} & -1207.7 \\
-        CNRS-$SP_1$ & -1220.5 \\
-        CNRS-$SP_3$ & -1220.7 \\
-        Polimi & -1227.0 \\
-        PSI & -1219.6 \\
-        TUD-$S_2$ & -1208.5 \\
-        TUD-$S_6$ & -1184.4 \\
-        \bottomrule
-    \end{tabular}
-    \label{table:rho13}
-\end{table}
-
-\subsection{Step 1.4: Full coupling}
+\subsubsection{Step 1.4: Full coupling}
 
 Table \ref{table:full} shows the change in $\rho$ under the various $U_{lid}$
 and $P$ values. We refer readers to Tiberga et al.'s paper

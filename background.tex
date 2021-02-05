@@ -2,14 +2,16 @@
 
 \subsection{CNRS Benchmark}
 
-The ``CNRS benchmark'' \cite{tiberga_results_2020} is a numerical benchmark for
-software dedicated to modeling \glspl{MSR}. It consists of three ``phases'' and
-eight ``steps'' in total. Each step is a well-defined subproblem for
+The CNRS benchmark \cite{tiberga_results_2020} consists of three ``Phases'' and
+eight ``Steps'' in total. Each Step is a well-defined subproblem for
 systematically assessing the capabilities of \gls{MSR} software and pinpointing
 the source of discrepancies between software. Phase 0 consists
 single-physics problems in fluid dynamics, neutronics, and temperature,
 respectively. Phase 1 consists of coupled, steady-state eigenvalue problems.
-Lastly, Phase 2 consists of a coupled, transient scenario.
+Lastly, Phase 2 consists of a coupled, transient scenario. Table
+\ref{table:benchmark} provides brief descriptions of each Step, except for the
+last transient case as it is still work in progress at the time of writing and
+submission.
 
 The domain geometry is a 2m by 2m square cavity filled with LiF-BeF$_2$-UF$_4$
 molten salt at an initial temperature of 900K \cite{tiberga_results_2020}.
@@ -57,7 +59,6 @@ and the neutron diffusion coefficients:
 The benchmark also prescribes for incompressible Navier-Stokes and the
 Boussinesq approximation for buoyancy when evaluating the salt flow in the
 domain, but places no restrictions on the type of neutronics model.
-The following subsections briefly detail each benchmark subproblem.
 
 \begin{table*}[t!]
 	\caption{Description of each benchmark subproblem.}
@@ -153,30 +154,17 @@ The following subsections briefly detail each benchmark subproblem.
 \subsection{Moltres}
 
 Moltres \cite{lindsay_introduction_2018} is an open-source, \gls{MOOSE}-based
-application designed for multiphysics simulations of \glspl{MSR}. The goal of
-making Moltres open-source is to promote quality through transparency and
-ease of peer review. The source code \cite{lindsay_moltres_2017} is available
-on GitHub \cite{lindsay_moltres_2017}. Moltres leverages on \texttt{git} for
-version control, and integrated testing to protect existing capabilities while
-concurrently supporting continued code development. Moltres depends on the
+application designed for multiphysics simulations of \glspl{MSR}. Moltres
+depends on the
 \gls{MOOSE} finite element framework for its meshing and parallel, nonlinear
 NEWTON-based solver capabilities; as well as common physics modules such as the
-Navier-Stokes module \cite{peterson_overview_2017} in \gls{MOOSE}. Therefore,
-Moltres by default uses tight coupling methods with implicit time-stepping.
-Users can also opt to decouple problems depending on their specific needs.
+Navier-Stokes module \cite{peterson_overview_2017} in \gls{MOOSE}.
 
 Moltres solves the multigroup neutron diffusion equation for an arbitrary
 number of energy and precursor groups. For this study, we coupled Moltres'
 neutronics capabilities with \gls{MOOSE}'s incompressible Navier-Stokes
 capabilities \cite{peterson_overview_2017} to
-model precursor drift and thermal-hydraulics. We performed all simulations
-except Step 1.4 using the Preconditioned \gls{JFNK} method with all physics
-fully coupled. Step 1.4 required a transient solve on the thermal-hydraulics
-portion of the problem to resolve the coupling between lid-driven flow and
-buoyancy effects. We then loosely coupled the thermal-hydraulics transient
-solve to the neutronics steady-state criticality solve. For future work, we
-could explore and determine the appropriate initial conditions or \gls{MOOSE}'s
-nonlinear solver settings to circumvent this issue.
+model precursor drift and thermal-hydraulics.
 
 For this study, we discretized the problem domain into a 200 by 200 structured
 mesh, resulting in uniform mesh elements of dimensions 1cm by 1cm. We
