@@ -21,7 +21,7 @@ cavity flow. For temperature, all boundaries are insulated and we simulate salt
 cooling with the following volumetric heat sink equation:
 %
 \begin{align}
-    q'''(\vec{r}) &= \gamma \left(900 - T(\vec{r})\right),
+    q'''(\vec{r}) &= \gamma \left(900 - T(\vec{r})\right), \label{eq:heat}
     \intertext{where}
     q''' &= \mbox{volumetric heat sink [W$\cdot$m$^{-3}$],}
     \nonumber \\
@@ -59,192 +59,96 @@ Boussinesq approximation for buoyancy when evaluating the salt flow in the
 domain, but places no restrictions on the type of neutronics model.
 The following subsections briefly detail each benchmark subproblem.
 
-\subsubsection{Step 0.1: Velocity field}
-
-This step assesses the steady-state incompressible flow solution. $U_{lid}$
-refers to the velocity along the top boundary and it is nonzero to induce
-lid-driven cavity flow.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item $U_{lid} = 0.5$m$\cdot$s$^{-1}$
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Velocity components $(u_x, u_y)$ along centerlines AA' and BB'
-\end{itemize}
-
-\subsubsection{Step 0.2: Neutronics}
-
-This step assesses the neutronics solution in a static, isothermal fuel
-configuration. We use the reactor power $P$ to normalize the neutron flux.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item Static fuel
-    \item $T = 900$ K
-    \item $P = 1$ GW
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Fission rate density, $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$, along
-    centerline AA'
-    \item Reactivity, $\rho$
-\end{itemize}
-where $\phi_i$ is the neutron flux in group $i$.
-
-\subsubsection{Step 0.3: Temperature}
-
-This step assesses the thermal-hydraulics solution borne from the velocity
-field and fission heat generation from the previous two steps.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item Fixed velocity field from Step 0.1
-    \item Fixed fission heat source distribution from Step 0.2
-    \item Heat transfer coefficient, $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}
-    \cdot$K$^{-1}$
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Temperature distribution $T$ along centerlines AA' and BB'
-\end{itemize}
-
-\subsubsection{Step 1.1: Circulating fuel}
-
-This step assesses the neutronics solution under a fixed velocity field and
-uniform temperature distribution. We allow the precursors to drift under the
-provided velocity field.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item Fixed velocity field from Step 0.1
-    \item $T = 900$ K
-    \item $P = 1$ GW
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Delayed neutron source, $\sum_j \lambda_j C_j$, along AA' and BB'
-    \item Reactivity change from Step 0.2, $\rho - \rho_{s_{0.2}}$
-\end{itemize}
-where $\lambda_j$ is the decay constant of the precursors in group $j$ and
-$C_j$ is the precursor concentration in group $j$.
-
-\subsubsection{Step 1.2: Power coupling}
-
-This step assesses the coupled neutronics and thermal-hydraulics solutions
-under a fixed velocity field. The non-uniform temperature distribution induces
-a change in the shape of the neutron flux which in turn further skews the
-temperature distribution.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item Fixed velocity field from Step 0.1
-    \item $P = 1$ GW
-    \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Temperature distribution along AA' and BB'
-    \item Reactivity change from Step 1.1, $\rho - \rho_{s_{1.1}}$
-    \item Change in fission rate density along AA' and BB' with respect to the
-    solution from Step 0.2, $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r}) -
-    \left[\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})\right]_{s_{0.2}}$
-\end{itemize}
-
-\subsubsection{Step 1.3: Buoyancy}
-
-This step assesses the full multiphysics solution with buoyancy-driven flow. 
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item $P = 1$ GW
-    \item $U_{lid} = 0$
-    \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Velocity components $(u_x, u_y)$ along AA' and BB'
-    \item Temperature distribution $T$ along AA' and BB'
-    \item Delayed neutron source, $\sum_j \lambda_j C_j$, along AA' and BB'
-    \item Reactivity change from Step 0.2, $\rho - \rho_{s_{0.2}}$
-\end{itemize}
-
-\subsubsection{Step 1.4: Full coupling}
-
-This step assesses the full multiphysics solution with buoyancy effects
-and external momentum-driven flow from the nonzero lid velocity.
-
-\textit{Input parameters}
-%
-\begin{itemize}
-    \itemsep0em
-    \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
-    \item $P = [0, 1]$ GW at $0.2$ GW intervals
-    \item $U_{lid} = [0, 0.5]$ m$\cdot$s$^{-1}$ at 0.1m$\cdot$s$^{-1}$
-    intervals
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Reactivity change from Step 0.2, $\rho - \rho_{s_{0.2}}$ for the
-    various permutations of $P$ and $U_{lid}$ values
-\end{itemize}
-
-\subsubsection{Step 2.1: Forced convection transient}
-
-This step assesses the transient response (gain and phase shift) of the fully
-coupled system to an oscillating heat sink. $\gamma$ is uniformly perturbed
-according to a sine function with an amplitude equal to 10\% of the initial
-amplitude and at the following frequencies: $[0.0125, 0.025, 0.05, 0.1, 0.2,
-0.4, 0.8]$ Hz.
-
-\textit{Initial conditions}
-%
-\begin{itemize}
-    \itemsep0em
-    \item Steady-state solution from Step 1.4 with
-    $U_{lid} = 0.5 $m$\cdot$s$^{-1}$ and $P = 1$ GW
-    \item $\gamma = 1 \times 10^6$ W$\cdot$m$^{-3}\cdot$K$^{-1}$
-\end{itemize}
-
-\textit{Observables}
-\begin{itemize}
-    \itemsep0em
-    \item Power gain and phase shift at each perturbation frequency.
-\end{itemize}
-%
-The gain is defined as:
-%
-\begin{align}
-    Gain &= \frac{(P_{max} - P_{avg})/P_{avg}}{(\gamma_{max} - \gamma_{avg})/
-    \gamma_{avg}}
-\end{align}
+\begin{table*}[t!]
+	\caption{Description of each benchmark subproblem.}
+	\centering
+	\small
+	\setlength\tabcolsep{2.5pt}
+	\begin{tabular}{p{33mm} p{65mm} l p{40mm}<{\centering}}
+		\toprule
+		Step & Description & Input parameters & Observables \\
+		\midrule
+		Step 0.1: Velocity field & Solve for the steady-state incompressible
+		flow solution from lid-driven cavity flow. &
+		$\begin{aligned}[t]
+		    U_{lid} &= 0.5 \mbox{ m$\cdot$s$^{-1}$}
+        \end{aligned}$
+        & $(u_x, u_y)$ along AA' and BB'; \\
+        \midrule
+        Step 0.2: Neutronics & Solve for the fission rate density
+        $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$ and reactivity $\rho$
+        in a static, isothermal fuel configuration. &
+		$\begin{aligned}[t]
+		    U_{lid} &= 0 \mbox{ m$\cdot$s$^{-1}$} \\
+		    T &= 900 \mbox{ K} \\
+		    P &= 1 \mbox{ GW}
+        \end{aligned}$
+        & $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$ along AA'; \newline
+        $\rho$; \\
+        \midrule
+        Step 0.3: Temperature & Solve for the temperature distribution $T$
+        arising from the velocity field $(u_x, u_y)_{s_{0.1}}$ and fission heat
+        generation $Q_{s_{0.2}}$ from Steps
+        0.1 and 0.2, respectively, and a volumetric heat sink (Equation
+        \ref{eq:heat}). &
+		$\begin{aligned}[t]
+		    (u_x, u_y) &= (u_x, u_y)_{s_{0.1}} \\
+		    Q &= Q_{s_{0.2}} \\
+		    \gamma &= 10^6 \mbox{ W$\cdot$m$^{-3}\cdot$K$^{-1}$}
+        \end{aligned}$
+        & $T$ along AA' and BB'; \\
+        \midrule
+        Step 1.1: Circulating fuel & Solve for the delayed neutron source
+        distribution $\sum_j \lambda_j C_j$ and reactivity $\rho$ in a
+        non-static, isothermal fuel configuration. &
+		$\begin{aligned}[t]
+		    (u_x, u_y) &= (u_x, u_y)_{s_{0.1}} \\
+		    T &= 900 \mbox{ K} \\
+		    P &= 1 \mbox{ GW}
+        \end{aligned}$
+        & $\sum_j \lambda_j C_j$ along AA' and BB'; \newline $\rho -
+        \rho_{s_{0.2}}$; \\
+        \midrule
+        Step 1.2: Power coupling & Solve for the temperature distribution $T$,
+        reactivity $\rho$, and fission rate density
+        $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})$ under the fixed velocity field
+        from Step 0.1. &
+		$\begin{aligned}[t]
+		    (u_x, u_y) &= (u_x, u_y)_{s_{0.1}} \\
+		    P &= 1 \mbox{ GW} \\
+		    \gamma &= 10^6 \mbox{ W$\cdot$m$^{-3}\cdot$K$^{-1}$}
+        \end{aligned}$
+        & $T$ along AA' and BB'; \newline $\rho - \rho_{s_{1.1}}$; \newline
+        $\sum^G_i \Sigma_{f,i} \phi_i(\vec{r}) -
+        \left[\sum^G_i \Sigma_{f,i} \phi_i(\vec{r})\right]_{s_{0.2}}$; \\
+        \midrule
+        Step 1.3: Buoyancy & Solve for the velocity components $(u_x, u_y)$,
+        temperature distribution $T$, delayed neutron source
+        distribution $\sum_j \lambda_j C_j$, and
+        reactivity $\rho$ in a fully coupled system. &
+		$\begin{aligned}[t]
+		    P &= 1 \mbox{ GW} \\
+		    U_{lid} &= 0 \mbox{ m$\cdot$s$^{-1}$} \\
+		    \gamma &= 10^6 \mbox{ W$\cdot$m$^{-3}\cdot$K$^{-1}$}
+        \end{aligned}$
+        & $(u_x, u_y)$ along AA' and BB'; \newline $T$ along AA' and BB';
+        \newline $\sum_j \lambda_j C_j$ along AA' and BB'; \newline
+        $\rho - \rho_{s_{0.2}}$; \\
+        \midrule
+        Step 1.4: Full coupling & Solve for the
+        reactivity $\rho$ in a fully coupled system with both external
+        momemtum-driven flow and buoyancy effects and various permutations of
+        $P$ and $U_{lid}$ values.  &
+		$\begin{aligned}[t]
+		    \gamma &= 10^6 \mbox{ W$\cdot$m$^{-3}\cdot$K$^{-1}$} \\
+		    P &= [0, 1] \mbox{ GW} \\
+		    U_{lid} &= [0, 0.5] \mbox{ m$\cdot$s$^{-1}$}
+        \end{aligned}$
+        & $\rho - \rho_{s_{0.2}}$; \\
+		\bottomrule
+	\end{tabular}
+	\label{table:benchmark}
+\end{table*}
 
 \subsection{Moltres}
 
