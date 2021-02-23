@@ -1,16 +1,16 @@
-# ans-abs-template
+# 2021-park-ans-summer
 
-Template for the American Nuclear Society Annual Meeting, Winter Meeting, and 
-Student Conference abstracts.
-
+This repository holds data and files for the "Multiphysics Benchmark Results
+from Moltres" conference summary submitted to the 2021 ANS Annual Meeting.
+The summary presents latest benchmarking results for coupled
+neutronics/thermal-hydraulics simulations in Moltres.
 
 ### Instructions
-1. Update all ``FIXME`` items.
-2. Building
+1. Building the pdf file for the summary
 - To build on a Linux machine run ``make``.
 - To build on a Windows machine run
   - ``pdflatex main.tex``
   - ``bibtex main.tex``
   - ``pdflatex main.tex``
   - ``pdflatex main.tex``
-3. To get rid of built files, ``make clean.``
+2. To get rid of built files, ``make clean.``
